@@ -1,6 +1,6 @@
 # Books XML
 ## a simple project that saves books data in XML
-### how make it work
+### how to make it work
 1. in the serverside create a .env file inside server\server.API with this parameters
 ```
 CLIENT_URL=http://localhost:4200
