@@ -76,6 +76,9 @@ artifacts/
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
+server/.env
+server/server.API/.env
+server/server.API/Properties/launchSettings.json
 
 # StyleCop
 StyleCopReport.xml
