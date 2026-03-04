@@ -12,7 +12,7 @@ it can be any other value, the values are examples, but it is important the clie
 
 now run the server (dotnet run) from server.API
 
-2. in the client side create a env.ts inside client\insurtix-client\src\environments with this parameter
+2. in the client side create a env.ts inside client\client\src\environments with this parameter
  ```
 export const environment = {
   apiUrl: 'https://localhost:7044'
