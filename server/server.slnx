@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Solution Items/" />
+  <Project Path="server.API/server.API.csproj" />
+  <Project Path="server.BL/server.BL.csproj" />
+  <Project Path="server.Models/server.Models.csproj" />
+</Solution>
