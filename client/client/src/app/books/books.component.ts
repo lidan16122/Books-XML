@@ -1,7 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Book } from './books.models';
 import { BooksService } from './books.service';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { tap } from 'rxjs';
 
 @Component({
@@ -18,6 +17,7 @@ export class BooksComponent implements OnInit {
 
   ngOnInit(){
     this.InitializeData();
+    console.log(this.booksList());    
   }
 
   InitializeData() {
@@ -29,7 +29,8 @@ export class BooksComponent implements OnInit {
         error: (err) => {
           console.error('Error fetching books:', err);
         }
-      }));
+      }))
+      .subscribe();
   }
 
   createBook(book: Book) {
@@ -43,6 +44,7 @@ export class BooksComponent implements OnInit {
             console.error('Error creating book:', err);
           }
         }))
+      .subscribe();
   }
 
   updateBook(book: Book) {
@@ -56,6 +58,7 @@ export class BooksComponent implements OnInit {
             console.error('Error updating book:', err);
           }
         }))
+      .subscribe();
   }
 
   deleteBook(isbn: string) {
@@ -69,6 +72,7 @@ export class BooksComponent implements OnInit {
             console.error('Error deleting book:', err);
           }
         }))
+      .subscribe();
   }
 
 }
