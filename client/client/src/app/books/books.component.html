@@ -1,1 +1,35 @@
-<p>books works!</p>
+<h1>Books</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ISBN</th>
+      <th>Title</th>
+      <th>Authors</th>
+      <th>Category</th>
+      <th>Cover</th>
+      <th>Language</th>
+      <th>Year</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for(book of booksList(); track book.isbn){
+        <tr>
+            <td>{{ book.isbn }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.authors.join(', ') }}</td>
+            <td>{{ book.category }}</td>
+            <td>{{ book.cover }}</td>
+            <td>{{ book.lang }}</td>
+            <td>{{ book.year }}</td>
+            <td>{{ book.price}}</td>
+            <td class="actions">
+                <button class="btn-edit" title="Edit">✏️</button>
+                <button class="btn-delete" (click)="deleteBook(book.isbn)" title="Delete">🗑️</button>
+            </td>
+        </tr>
+    }
+  </tbody>
+</table>
+<button class="btn-create">Create Book</button>
