@@ -25,7 +25,7 @@
             <td>{{ book.year }}</td>
             <td>{{ book.price}}</td>
             <td class="actions">
-                <button class="btn-edit" title="Edit">✏️</button>
+                <button class="btn-edit" (click)="showEditForm(book)" title="Edit">✏️</button>
                 <button class="btn-delete" (click)="deleteBook(book.isbn)" title="Delete">🗑️</button>
             </td>
         </tr>
@@ -34,5 +34,8 @@
 </table>
 <button class="btn-create" (click)="showSubmitFormToggle(true)">Create Book</button>
 @if(showSubmitForm){
-    <app-new-book (cancel)="showSubmitFormToggle($event)" />
+  <app-new-book (cancel)="showSubmitFormToggle($event)" />
+}
+@if(editBook){
+  <app-new-book [book]="editBook" [editMode]="true" (cancel)="closeEditForm()" (submitEdit)="updateBook($event)" />
 }

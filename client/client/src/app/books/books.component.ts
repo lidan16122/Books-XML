@@ -14,6 +14,7 @@ export class BooksComponent implements OnInit {
   PAGE_SIZE = 10;
   booksList = signal<Book[]>([]);
   showSubmitForm = false;
+  editBook: Book | null = null;
 
   constructor(private bookService: BooksService) {}
 
@@ -77,6 +78,17 @@ export class BooksComponent implements OnInit {
   }
   showSubmitFormToggle(show: boolean) {
     this.showSubmitForm = show;
+    this.editBook = null;
+    this.InitializeData();
+  }
+
+  showEditForm(book: Book) {
+    this.editBook = { ...book };
+    this.showSubmitForm = false;
+  }
+
+  closeEditForm() {
+    this.editBook = null;
     this.InitializeData();
   }
 }
