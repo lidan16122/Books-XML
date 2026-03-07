@@ -1,5 +1,4 @@
-import { Component, inject, output } from '@angular/core';
-import { Input } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Book } from '../books.models';
 import { BooksService } from '../books.service';
@@ -14,12 +13,11 @@ export class NewBookComponent {
   private fb = inject(FormBuilder);
   private bookService = inject(BooksService);
   cancel = output<boolean>();
-  submitEdit = output<Book>();
-  @Input() book?: Book;
-  @Input() editMode = false;
+  book = input<Book | null>();
+  editMode = false;
 
   form = this.fb.group({
-    isbn: ['', [Validators.required]],
+    isbn: ['', [Validators.required],],
     title: ['', [Validators.required, Validators.minLength(2)]],
     category: ['', Validators.required],
     language: ['', Validators.required],
@@ -27,24 +25,27 @@ export class NewBookComponent {
     year: [null as number | null, [Validators.required, Validators.min(1000), Validators.max(2026)]],
     price: [null as number | null, [Validators.required, Validators.min(0)]],
     authors: this.fb.array([
-      this.fb.control('', Validators.required)  // starts with one author field
+      this.fb.control('', Validators.required)  
     ])
   });
 
   ngOnInit() {
-    if (this.book) {
+    const book = this.book();
+    if (book) {
       this.editMode = true;
+      this.form.get('isbn')?.disable(); 
+      
       this.form.patchValue({
-        isbn: this.book.isbn,
-        title: this.book.title,
-        category: this.book.category,
-        language: this.book.lang,
-        cover: this.book.cover ?? '',
-        year: this.book.year,
-        price: this.book.price,
+        isbn: book.isbn,
+        title: book.title,
+        category: book.category,
+        language: book.lang,
+        cover: book.cover ?? '',
+        year: book.year,
+        price: book.price,
       });
       this.authors.clear();
-      this.book.authors.forEach(a => this.authors.push(this.fb.control(a, Validators.required)));
+      book.authors.forEach(a => this.authors.push(this.fb.control(a, Validators.required)));
     }
   }
 
@@ -85,9 +86,20 @@ export class NewBookComponent {
       price: this.form.value.price!,
       authors: this.form.value.authors!.filter(Boolean) as string[],
     };
+    debugger
     if (this.editMode) {
-      this.submitEdit.emit(book);
-      this.onCancel();
+      this.bookService.updateBook(book).subscribe(
+        {
+          next: (result) => {
+            if (result) {
+              this.onCancel();
+            }
+          },
+          error: (err) => {
+            console.error('Error updating book:', err);
+          }
+        }
+      )
     } else {
       this.bookService.createBook(book).subscribe({
         next: (result) => {
@@ -101,6 +113,7 @@ export class NewBookComponent {
       });
     }
   }
+
   onCancel() {
     this.cancel.emit(false);
   }

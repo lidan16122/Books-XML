@@ -86,9 +86,4 @@ export class BooksComponent implements OnInit {
     this.editBook = { ...book };
     this.showSubmitForm = false;
   }
-
-  closeEditForm() {
-    this.editBook = null;
-    this.InitializeData();
-  }
 }

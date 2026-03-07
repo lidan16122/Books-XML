@@ -37,5 +37,5 @@
   <app-new-book (cancel)="showSubmitFormToggle($event)" />
 }
 @if(editBook){
-  <app-new-book [book]="editBook" [editMode]="true" (cancel)="closeEditForm()" (submitEdit)="updateBook($event)" />
+  <app-new-book [book]="editBook" (cancel)="showSubmitFormToggle($event)"/>
 }
