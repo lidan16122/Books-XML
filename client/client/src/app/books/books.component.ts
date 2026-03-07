@@ -2,22 +2,23 @@ import { Component, OnInit, signal } from '@angular/core';
 import { Book } from './books.models';
 import { BooksService } from './books.service';
 import { tap } from 'rxjs';
+import { NewBookComponent } from './new-book.component/new-book.component';
 
 @Component({
   selector: 'app-books',
-  imports: [],
+  imports: [NewBookComponent],
   templateUrl: './books.component.html',
   styleUrl: './books.component.css',
 })
 export class BooksComponent implements OnInit {
   PAGE_SIZE = 10;
   booksList = signal<Book[]>([]);
+  showSubmitForm = false;
 
   constructor(private bookService: BooksService) {}
 
   ngOnInit(){
     this.InitializeData();
-    console.log(this.booksList());    
   }
 
   InitializeData() {
@@ -74,5 +75,8 @@ export class BooksComponent implements OnInit {
         }))
       .subscribe();
   }
-
+  showSubmitFormToggle(show: boolean) {
+    this.showSubmitForm = show;
+    this.InitializeData();
+  }
 }
