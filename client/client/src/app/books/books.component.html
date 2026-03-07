@@ -32,4 +32,7 @@
     }
   </tbody>
 </table>
-<button class="btn-create">Create Book</button>
+<button class="btn-create" (click)="showSubmitFormToggle(true)">Create Book</button>
+@if(showSubmitForm){
+    <app-new-book (cancel)="showSubmitFormToggle($event)" />
+}

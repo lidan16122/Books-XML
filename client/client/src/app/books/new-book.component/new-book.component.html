@@ -1,0 +1,91 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="new-book-form">
+        <div>
+            <label>ISBN</label>
+            <input formControlName="isbn" placeholder="Book ISBN" />
+
+            @if(isbn?.invalid && isbn?.touched){
+                <p class="error">ISBN is required.</p>
+            }
+        </div>
+
+        <div>
+            <label>Title</label>
+            <input formControlName="title" placeholder="Book Title" />
+
+            @if(title?.invalid && title?.touched){
+                <p class="error">invalid title</p>
+            }
+        </div>
+
+        <div>
+            <label>Category</label>
+            <input formControlName="category" placeholder="Book Category" />
+
+            @if(category?.invalid && category?.touched){
+                <p class="error">Category is required.</p>
+            }
+        </div>
+
+        <div>
+            <label>Cover</label>
+            <input formControlName="cover" placeholder="Book Cover" />
+        </div>
+
+        <div>
+            <label>Language</label>
+            <input formControlName="language" placeholder="Book Language" />
+        </div>
+
+        <div>
+            <label>Authors</label>
+            <div formArrayName="authors" class="authors-list">
+            @for (author of authors.controls; track $index; let i = $index) {
+              <div class="author-row" [class.invalid]="author.invalid && author.touched">
+                <input
+                  [formControlName]="i"
+                  placeholder="Author name"
+                  class="author-input"
+                />
+                @if (authors.length > 1) {
+                  <button type="button" class="remove-btn" (click)="removeAuthor(i)" title="Remove author">
+                    ✕
+                  </button>
+                }
+              </div>
+            }
+          </div>
+          <button type="button" class="add-author-btn" (click)="addAuthor()">
+            + Add another author
+          </button>
+          @if (authors.invalid && form.touched) {
+            <span class="error-msg">All author fields must be filled in</span>
+          }
+        </div>
+
+        <div>
+            <label>Year</label>
+            <input formControlName="year" placeholder="Book Year" type="number"/>
+
+            @if(year?.invalid && year?.touched){
+                <p class="error">invalid year</p>
+            }
+        </div>
+
+        <div>
+            <label>Price</label>
+            <input formControlName="price" placeholder="Book Price" type="number" />
+
+            @if(price?.invalid && price?.touched){
+                <p class="error">invalid price</p>
+            }
+        </div>
+
+        <div class="form-actions">
+            <button type="submit">Submit</button>
+            <button type="button" (click)="onCancel()">Cancel</button>
+        </div>
+    </form>
+  </div>
+</div>
