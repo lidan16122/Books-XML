@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Book } from './books.models';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BooksService {
-  apiRoute = 'https://localhost:7044/api/books';
+  apiRoute = `${environment.apiUrl}api/books`;
 
   constructor(private http: HttpClient) { }
 
